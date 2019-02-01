@@ -1,0 +1,37 @@
+<!--
+  Generated template for the BusquedaPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>busqueda</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-searchbar
+    (ionInput)="onSearch($event)"
+    (ionClear)="onClear($event)">
+  </ion-searchbar>
+
+  <div *ngIf="loading" class="lds-ellipsis" text-center><div></div><div></div><div></div><div></div></div>
+
+
+  <ion-list *ngIf="searchList.length > 0 && !loading;">
+    <ion-item *ngFor="let item of searchList" (click)="nexToPagePagina(item)">
+      {{ item.producto }}
+    </ion-item>
+  </ion-list>
+
+  <div text-center *ngIf="emptySearch && !loading;">
+      Realice una busqueda...
+  </div>
+
+  <div text-center *ngIf="!emptySearch;">
+    <span *ngIf="searchList.length == 0 && !loading;">No se encuentran datos...</span>
+  </div>
+
+</ion-content>

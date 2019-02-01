@@ -1,14 +1,65 @@
 <ion-header>
-  <ion-navbar>
+  <ion-toolbar>
+
+    <ion-buttons end>
+      <button 
+        *ngIf="_user.user_active()"
+        ion-button (click)="_user.cerrar_sesion()">
+        Salir
+      </button>
+    </ion-buttons>
+
     <ion-title>
-      Ionic Blank
+      Mi tienda
     </ion-title>
-  </ion-navbar>
+    
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="_carrito.ver_carrito()">
+        <ion-icon name="cart"></ion-icon>
+        <ion-badge color="danger" class="carrito-numero" *ngIf="_carrito.items.length > 0">
+          {{ _carrito.items.length }}
+        </ion-badge>
+      </button>
+      &nbsp;&nbsp;
+    </ion-buttons>
+    
+  </ion-toolbar>
+
+  
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+
+
+
+<ion-content >
+    
+  <ion-grid *ngIf="productoList.length > 0"  style="background-color: rgba(236, 239, 241, 0.95);">
+    <ion-row *ngFor="let par of productoList">
+      <ion-col  class="style-catalogue"
+      *ngFor="let item of par; let i = index" (click)="toNextPage($event, item)">
+         
+            <img [src]="item.codigo | imagenUrl" height="160" width="100%">
+              <div *ngIf="displayProducto(item)" class="ribbon">
+                <span>Agregado</span>
+              </div>
+
+              <div class="style-catalogue-items">
+                  <div style="flex-grow: 1">    
+                      {{ (item.producto.length > 35) ?  (item.producto | slice:0:35)+'..':(item.producto)}}
+                  </div>
+                  <div class="style-price">
+                      {{ item.precio_compra | currency:'USD':true }}
+                  </div><br><br>
+              </div>
+   
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+ 
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" [enabled]="hayMas">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 </ion-content>

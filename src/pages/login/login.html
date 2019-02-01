@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar mode="ios">
+    <ion-buttons>
+        <button ion-button icon-only small (click)="viewCtrl.dismiss()">
+            <ion-icon name="close"></ion-icon>
+        </button>
+    </ion-buttons>
+    
+    <ion-title mode="ios">login</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-item>
+      <ion-label color="primary" floating>Correo</ion-label>
+      <ion-input type="email" [(ngModel)]="correo"></ion-input>
+    </ion-item>
+  
+    <ion-item>
+      <ion-label color="primary" floating>Contraseña</ion-label>
+      <ion-input type="password" [(ngModel)]="contrasena"></ion-input>
+    </ion-item>
+
+  <button ion-button color="primary" block
+    (click)="logearse()" 
+    [disabled]="correo.length < 5 && contrasena.length < 4">
+    Login
+  </button>
+</ion-content>
